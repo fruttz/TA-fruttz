@@ -9,32 +9,39 @@ public class DatabaseManager : MonoBehaviour
     public string db_url = "https://immersive-visualization-pemilu-default-rtdb.asia-southeast1.firebasedatabase.app/";
     Candidate candidate1 = new Candidate("candidate1");
     Candidate candidate2 = new Candidate("candidate2");
-    public void RetrieveData(Candidate candidate){
+
+    public Candidate RetrieveData(Candidate candidate){
         RestClient.Get<Candidate>(db_url + candidate.name + ".json").Then(response => {
-            candidate = response;
+            candidate.CopyCandidate(response);
         });
+        return candidate;
     }
 
     public void UpdateData(Candidate candidate){
-        Candidate tempCandidate = new Candidate(candidate.name);
-        tempCandidate.SetRandomValue();
-        RestClient.Put(db_url + candidate.name + ".json", tempCandidate).Then(response => {
+        candidate.SetRandomValue();
+        RestClient.Put(db_url + candidate.name + ".json", candidate).Then(response => {
             Debug.Log("Status" + response.StatusCode.ToString() + "OK");
         });
-
     }
 
     public void ResetData(Candidate candidate){
-        Candidate tempCandidate = new Candidate(candidate.name);
-        tempCandidate.SetZero();
-        RestClient.Put(db_url + candidate.name + ".json", tempCandidate).Then(response => {
+        candidate.SetZero();
+        RestClient.Put(db_url + candidate.name + ".json", candidate).Then(response => {
             Debug.Log("Status" + response.StatusCode.ToString() + "OK");
         });
+    }
+
+    public void GetButton(){
+        candidate1 = RetrieveData(candidate1);
+        Debug.Log(candidate1.GetTotalValue());
     }
 
     public void PutButton(){
         UpdateData(candidate1);
-        UpdateData(candidate2);
+    }
+
+    public void ResetButton(){
+        ResetData(candidate1);
     }
     
 
