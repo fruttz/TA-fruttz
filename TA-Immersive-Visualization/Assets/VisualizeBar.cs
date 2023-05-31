@@ -7,7 +7,7 @@ using UnityEditor;
 
 public class VisualizeBar : MonoBehaviour
 {
-    public string db_url = "https://immersive-visualization-pemilu-default-rtdb.asia-southeast1.firebasedatabase.app/";
+    private string db_url = "https://immersive-visualization-pemilu-default-rtdb.asia-southeast1.firebasedatabase.app/";
     public string candidateName;
     enum Province {
         total,
@@ -51,43 +51,48 @@ public class VisualizeBar : MonoBehaviour
     private Province province = new Province();
     public GameObject Bar;
     public TextMeshPro voterValue;
-    private float barWidth = 0.5f;
-    private float updateInterval = 0.001f;
-    private float nextUpdateTime = 10f;
+    private float barWidth = 1f;
 
     private float normalizeValue(int value){
-        float newValue = (float)value * 0.0001f;
-        return newValue;
+        float newValue;
+        if (((int)province) != 0){
+            newValue = (float)value * 0.001f;
+            return newValue;
+        }
+        else{
+            newValue = (float)value * 0.00001f;
+            return newValue;
+        }
     }
 
     private void RetrieveData(){
         Candidate candidate = new Candidate(candidateName);
         RestClient.Get<Candidate>(db_url + candidate.name + ".json").Then(response => {
             candidate = response;
-            adjustBar(candidate);
+            adjustBar(candidate.getProvince((int)province));
             setTextValue(candidate.getProvince((int)province));
+
         });
     }
 
-    private void adjustBar(Candidate candidate){
-        Bar.transform.localScale = new Vector3(barWidth, normalizeValue(candidate.getProvince((int)province)), barWidth);
+    private void adjustBar(int value){
+        Bar.transform.localScale = new Vector3(barWidth, normalizeValue(value), barWidth);
     }
 
     private void setTextValue(int value){
         voterValue.text = value.ToString();
     }
 
-    void Start()
-    {
-        
-        RetrieveData();
-    }
-
-    void Update()
-    {
-        if(Time.time > nextUpdateTime){
+    IEnumerator updateBar(){
+        while (true){
             RetrieveData();
-            nextUpdateTime = Time.time + updateInterval;
+            yield return new WaitForSecondsRealtime(5);
         }
     }
+
+    void Start() 
+    {
+        StartCoroutine(updateBar());
+    }
+
 }
