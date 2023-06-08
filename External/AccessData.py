@@ -15,28 +15,46 @@ data = ref.get()
 candidate1 = data["candidate1"]
 candidate2 = data["candidate2"]
 
+TOTAL_VOTER_OVERALL = 150000000
+
+def calculate_total(candidate):
+    total = 0
+    for key in candidate:
+        if key != "name":
+            total += candidate[key]
+    return total
+
 def reset_data(candidate):
     for key in candidate:
         if key != "name":
             ref.child(candidate["name"]).update({
                 key : 0
             })
+    print("reset")
 
 def update_data(candidate):
     for key in candidate:
         if key != "name":
-            candidate[key] += random.randint(0, 100)
+            candidate[key] += random.randint(100, 100000)
             ref.child(candidate["name"]).update({
                 key : candidate[key]
             })
 
+def random_update(value):
+    print("random value: ", value)
+    if value == 1:
+        update_data(candidate1)
+    elif value == 2:
+        update_data(candidate2)
+
 def main():
     n = 1
-    while True:
+    while (calculate_total(candidate1) + calculate_total(candidate2) <= TOTAL_VOTER_OVERALL):
         print(f"iteration number {n}")
-        update_data(candidate1)
-        update_data(candidate2)
+        random_update(random.randint(1,2))
         n += 1
         time.sleep(2)
+    if calculate_total(candidate1) + calculate_total(candidate2) >= TOTAL_VOTER_OVERALL:
+        print("Total voter reached, data stopped")
 
 main()
