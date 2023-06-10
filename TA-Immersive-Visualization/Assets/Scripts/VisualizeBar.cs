@@ -90,7 +90,7 @@ public class VisualizeBar : MonoBehaviour
     IEnumerator updateBar(){
         while (true){
             RetrieveData();
-            yield return new WaitForSecondsRealtime(10);
+            yield return new WaitForSecondsRealtime(5);
         }
     }
 

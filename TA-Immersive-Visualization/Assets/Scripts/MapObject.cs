@@ -14,10 +14,34 @@ public class MapObject : MonoBehaviour
     private MeshRenderer mapRenderer;
     private float candidate1Height;
     private float candidate2Height;
+
+    public void enableChart(){
+        SetLayer(chart.transform, 0);
+    }
+
+    public void disableChart(){
+        SetLayer(chart.transform, 6);
+    }
+
+    public string MapName(){
+        return this.gameObject.name;
+    }
+
+    private void SetLayer(Transform obj, int newLayer)
+    {
+        obj.gameObject.layer = newLayer;
+
+        foreach (Transform child in obj)
+        {
+            SetLayer(child, newLayer);
+        }
+    }
+
     void Start()
     {
+        disableChart();
         mapRenderer = mapProvince.GetComponent<MeshRenderer>();
-        //chart.SetActive(false);
+        
     }
 
     void Update()
