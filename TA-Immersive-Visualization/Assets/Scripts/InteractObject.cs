@@ -25,9 +25,9 @@ public class InteractObject : MonoBehaviour
             objectText.gameObject.SetActive(false);
         }
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit, 100)){
+        if (Physics.Raycast(ray, out hit, 250)){
             highlight = hit.transform;
-            if (highlight.CompareTag("Selectable") && highlight != selection){
+            if (highlight.CompareTag("Selectable")){
                 var mapScript = highlight.parent.GetComponent<MapObject>();
                 interactText.gameObject.SetActive(true);
                 objectText.gameObject.SetActive(true);
@@ -50,7 +50,7 @@ public class InteractObject : MonoBehaviour
         }
 
         if (Input.GetKeyDown("e")){
-            if (highlight){
+            if (highlight && highlight != selection){
                 if (selection != null){
                     selection.gameObject.GetComponent<Outline>().enabled = false;
                     interactText.gameObject.SetActive(false);
@@ -70,8 +70,6 @@ public class InteractObject : MonoBehaviour
                     var mapScript = selection.parent.GetComponent<MapObject>();
                     mapScript.disableChart();
                     selection.gameObject.GetComponent<Outline>().enabled = false;
-                    interactText.gameObject.SetActive(false);
-                    objectText.gameObject.SetActive(false);
                     selection = null;
                 }
             }
