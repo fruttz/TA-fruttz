@@ -14,6 +14,7 @@ data = ref.get()
 
 candidate1 = data["candidate1"]
 candidate2 = data["candidate2"]
+time_tracker = data["time"]
 
 TOTAL_VOTER_OVERALL = 150000000
 
@@ -47,11 +48,30 @@ def random_update(value):
     elif value == 2:
         update_data(candidate2)
 
+def time_update():
+    for key in time_tracker:
+        time_tracker[key] += 1
+        ref.child("time").update({
+                key : time_tracker[key]
+            })
+
+def time_reset():
+    for key in time_tracker:
+        ref.child("time").update({
+                key : 0
+            })
+
+def reset():
+    reset_data(candidate1)
+    reset_data(candidate2)
+    time_reset()
+        
 def main():
     n = 1
     while (calculate_total(candidate1) + calculate_total(candidate2) <= TOTAL_VOTER_OVERALL):
         print(f"iteration number {n}")
         random_update(random.randint(1,2))
+        time_update()
         n += 1
         time.sleep(2)
     if calculate_total(candidate1) + calculate_total(candidate2) >= TOTAL_VOTER_OVERALL:
