@@ -7,6 +7,7 @@ public class InteractObject : MonoBehaviour
 {
     public TextMeshProUGUI interactText;
     public TextMeshProUGUI objectText;
+    public Transform raycastObjectOrigin;
     private Transform highlight;
     private Transform selection;
     private RaycastHit hit;
@@ -24,8 +25,8 @@ public class InteractObject : MonoBehaviour
             interactText.gameObject.SetActive(false);
             objectText.gameObject.SetActive(false);
         }
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit, 250)){
+        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(raycastObjectOrigin.position, raycastObjectOrigin.TransformDirection(Vector3.forward), out hit, 250)){
             highlight = hit.transform;
             if (highlight.CompareTag("Selectable")){
                 var mapScript = highlight.parent.GetComponent<MapObject>();
