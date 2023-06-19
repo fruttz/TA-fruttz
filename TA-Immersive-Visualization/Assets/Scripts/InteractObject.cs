@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class InteractObject : MonoBehaviour
 {
     public TextMeshProUGUI interactText;
     public TextMeshProUGUI objectText;
     public Transform raycastObjectOrigin;
+    public InputActionProperty activate;
     private Transform highlight;
     private Transform selection;
     private RaycastHit hit;
@@ -25,7 +27,6 @@ public class InteractObject : MonoBehaviour
             interactText.gameObject.SetActive(false);
             objectText.gameObject.SetActive(false);
         }
-        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(raycastObjectOrigin.position, raycastObjectOrigin.TransformDirection(Vector3.forward), out hit, 250)){
             highlight = hit.transform;
             if (highlight.CompareTag("Selectable")){
@@ -50,7 +51,7 @@ public class InteractObject : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown("e")){
+        if (Input.GetKeyDown("e") || activate.action.ReadValue<float>() >= 0.5){
             if (highlight && highlight != selection){
                 if (selection != null){
                     selection.gameObject.GetComponent<Outline>().enabled = false;
