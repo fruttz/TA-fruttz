@@ -6,8 +6,8 @@ using UnityEngine.InputSystem;
 
 public class InteractObject : MonoBehaviour
 {
-    public TextMeshProUGUI interactText;
     public TextMeshProUGUI objectText;
+    public GameObject interactionUI;
     public Transform raycastObjectOrigin;
     public InputActionProperty activate;
     private Transform highlight;
@@ -15,8 +15,7 @@ public class InteractObject : MonoBehaviour
     private RaycastHit hit;
 
     private void Awake() {
-        interactText.gameObject.SetActive(false);
-        objectText.gameObject.SetActive(false);
+        interactionUI.SetActive(false);
     }
 
     void Update()
@@ -24,15 +23,13 @@ public class InteractObject : MonoBehaviour
         if (highlight != null){
             highlight.gameObject.GetComponent<Outline>().enabled = false;
             highlight = null;
-            interactText.gameObject.SetActive(false);
-            objectText.gameObject.SetActive(false);
+            interactionUI.SetActive(false);
         }
         if (Physics.Raycast(raycastObjectOrigin.position, raycastObjectOrigin.TransformDirection(Vector3.forward), out hit, 250)){
             highlight = hit.transform;
             if (highlight.CompareTag("Selectable")){
                 var mapScript = highlight.parent.GetComponent<MapObject>();
-                interactText.gameObject.SetActive(true);
-                objectText.gameObject.SetActive(true);
+                interactionUI.SetActive(true);
                 objectText.text = mapScript.MapName();
                 if (highlight.gameObject.GetComponent<Outline>() != null){
                     highlight.gameObject.GetComponent<Outline>().enabled = true;
@@ -46,8 +43,7 @@ public class InteractObject : MonoBehaviour
             }
             else {
                 highlight = null;
-                interactText.gameObject.SetActive(false);
-                objectText.gameObject.SetActive(false);
+                interactionUI.SetActive(false);
             }
         }
 
@@ -55,14 +51,12 @@ public class InteractObject : MonoBehaviour
             if (highlight && highlight != selection){
                 if (selection != null){
                     selection.gameObject.GetComponent<Outline>().enabled = false;
-                    interactText.gameObject.SetActive(false);
-                    objectText.gameObject.SetActive(false);
+                    interactionUI.SetActive(false);
                 }
                 selection = hit.transform;
                 var mapScript = selection.parent.GetComponent<MapObject>();
                 mapScript.enableChart();
-                interactText.gameObject.SetActive(true);
-                objectText.gameObject.SetActive(true);
+                interactionUI.SetActive(true);
                 objectText.text = mapScript.MapName();
                 selection.gameObject.GetComponent<Outline>().enabled = true;
                 highlight = null;
