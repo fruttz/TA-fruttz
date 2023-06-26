@@ -76,5 +76,4 @@ def main():
         time.sleep(2)
     if calculate_total(candidate1) + calculate_total(candidate2) >= TOTAL_VOTER_OVERALL:
         print("Total voter reached, data stopped")
-
 main()
