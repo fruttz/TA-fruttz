@@ -73,7 +73,7 @@ def main():
         random_update(random.randint(1,2))
         time_update()
         n += 1
-        time.sleep(2)
+        time.sleep(10)
     if calculate_total(candidate1) + calculate_total(candidate2) >= TOTAL_VOTER_OVERALL:
         print("Total voter reached, data stopped")
 main()
