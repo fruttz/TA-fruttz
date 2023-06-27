@@ -263,6 +263,22 @@ PrefabInstance:
       propertyPath: activate.m_Action.m_Name
       value: Activate
       objectReference: {fileID: 0}
+    - target: {fileID: 1140888788807116232, guid: 929c498309405d940b6e165b9af60908, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2806927788776447785, guid: 929c498309405d940b6e165b9af60908, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3540075935574512205, guid: 929c498309405d940b6e165b9af60908, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853034918675510739, guid: 929c498309405d940b6e165b9af60908, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4547023427283227302, guid: 929c498309405d940b6e165b9af60908, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.75
@@ -287,6 +303,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 538.4
       objectReference: {fileID: 0}
+    - target: {fileID: 5851611350457170164, guid: 929c498309405d940b6e165b9af60908, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5851611351983101867, guid: 929c498309405d940b6e165b9af60908, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 7538025011863208920, guid: 929c498309405d940b6e165b9af60908, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -298,6 +322,10 @@ PrefabInstance:
     - target: {fileID: 7700887882345208426, guid: 929c498309405d940b6e165b9af60908, type: 3}
       propertyPath: m_CollisionDetection
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9054190822612531206, guid: 929c498309405d940b6e165b9af60908, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 929c498309405d940b6e165b9af60908, type: 3}
@@ -1668,6 +1696,10 @@ PrefabInstance:
     - target: {fileID: 7021522049236834192, guid: 56e035b94a56b884480c2d3473ac3555, type: 3}
       propertyPath: m_Name
       value: PlayerXR
+      objectReference: {fileID: 0}
+    - target: {fileID: 7204570613765745677, guid: 56e035b94a56b884480c2d3473ac3555, type: 3}
+      propertyPath: m_MoveSpeed
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 7204570613765745677, guid: 56e035b94a56b884480c2d3473ac3555, type: 3}
       propertyPath: m_EnableStrafe
