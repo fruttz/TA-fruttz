@@ -10,9 +10,11 @@ public class InteractObject : MonoBehaviour
     public GameObject interactionUI;
     public Transform raycastObjectOrigin;
     public InputActionProperty activate;
+    public LineRenderer laser;
     private Transform highlight;
     private Transform selection;
     private RaycastHit hit;
+    [SerializeField] private int range;
 
     private void Awake() {
         interactionUI.SetActive(false);
@@ -25,7 +27,7 @@ public class InteractObject : MonoBehaviour
             highlight = null;
             interactionUI.SetActive(false);
         }
-        if (Physics.Raycast(raycastObjectOrigin.position, raycastObjectOrigin.TransformDirection(Vector3.forward), out hit, 250)){
+        if (Physics.Raycast(raycastObjectOrigin.position, raycastObjectOrigin.TransformDirection(Vector3.forward), out hit, range)){
             highlight = hit.transform;
             if (highlight.CompareTag("Selectable")){
                 var mapScript = highlight.parent.GetComponent<MapObject>();
@@ -70,8 +72,16 @@ public class InteractObject : MonoBehaviour
                 }
             }
         }
+        
+    }
 
-        
-        
+    public void enableLaser(){
+        laser.enabled = true;
+        laser.SetPosition(0, raycastObjectOrigin.position);
+        laser.SetPosition(1, raycastObjectOrigin.position + (raycastObjectOrigin.forward * range));
+    }
+
+    public void disableLaser(){
+        laser.enabled = false;
     }
 }
