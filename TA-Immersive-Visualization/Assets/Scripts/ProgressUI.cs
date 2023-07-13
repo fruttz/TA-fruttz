@@ -11,13 +11,14 @@ public class ProgressUI : MonoBehaviour
     public TextMeshPro bar2Value;
     public TextMeshProUGUI voteCountText;
     public TextMeshProUGUI progressPercentage;
+    public TextMeshProUGUI totalCountText;
     public Image mask;
+    private int totalCount;
     private int current;
-    //private string db_url = "https://immersive-visualization-pemilu-default-rtdb.asia-southeast1.firebasedatabase.app/time";
-    private const int TOTAL = 150000000;
+    private string db_url = "https://immersive-visualization-pemilu-default-rtdb.asia-southeast1.firebasedatabase.app/voter";
 
-    private void Start() {
-        //StartCoroutine(trackTime());
+    private void Awake() {
+        StartCoroutine(updateTotalCount());
     }
 
     void Update()
@@ -26,8 +27,9 @@ public class ProgressUI : MonoBehaviour
     }
 
     private void trackProgress(){
+        totalCount = int.Parse(totalCountText.text);
         current = int.Parse(bar1Value.text) + int.Parse(bar2Value.text);
-        float fillAmount = (float) current / (float) TOTAL;
+        float fillAmount = (float) current / (float) totalCount;
         mask.fillAmount = fillAmount;
 
         voteCountText.text = current.ToString();
@@ -36,22 +38,22 @@ public class ProgressUI : MonoBehaviour
         progressPercentage.text = percentage.ToString();
     }
 
-/*    private void setProgressDays(int value){
-        daysText.text = value.ToString();
+    private void setTotalCount(int value){
+        totalCountText.text = value.ToString();
     }
 
-    private void RetrieveTimeData(){
-        RestClient.Get<TimeTracker>(db_url + ".json").Then(response => {
-            setProgressDays(response.days_passed);
+    private void RetrieveVoterData(){
+        RestClient.Get<VoterCount>(db_url + ".json").Then(response => {
+            setTotalCount(response.voter_count_total);
         });
     }
 
-    IEnumerator trackTime(){
-        while (true){
-            RetrieveTimeData();
-            yield return new WaitForSecondsRealtime(5);
+    IEnumerator updateTotalCount(){
+        while(true){
+            RetrieveVoterData();
+            yield return new WaitForSeconds(5);
         }
     }
-*/
+
 
 }
